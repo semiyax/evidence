@@ -1,0 +1,52 @@
+# Имя игрока, от лица которого будет сделан скрин
+name: 'I3aTa'
+
+# Количество коинов (сам множитель берется автоматически по привилегии игрока)
+coins: 618
+
+# ID сервера
+server: 'LOBBY_1'
+
+# Номер выбранного слота (0-8)
+slot: 3
+
+# Пресет хотбара: LOBBY | BP | KP | GG
+# Или кастомный вариант:
+# preset: 'compass|bone|-|-|-|-|emerald|-|emerald'
+preset: 'LOBBY'
+
+# Состояние чата:
+# 0 - закрыт
+# 1 - открыт
+# 2 - открыт + курсор
+chatOpened: 0
+
+# Сообщения в чате
+chat:
+- 'I3aTa: Проверка нового рендера ников'
+- 'Mita: Градиент никнейма читается корректно'
+
+# Включение модулей
+modules:
+  hand:            true
+  texteria:        true
+  crosshair:       true
+  hotbar:          true
+  indicators:      true
+  items:           true
+  chat:            true
+  chat_background: true
+
+# Дополнительные ресурс-паки (файлы .zip из папки resourcepacks)
+resourcepacks: []
+# Пример:
+# resourcepacks: [rodrigo.zip, font.zip]
+
+# Положение стрелки компаса (0-31)
+compass-target: 22
+
+# Опционально: HTTP proxy для API (формат host:port)
+# proxy: '127.0.0.1:8888'
+
+# Опционально: отключение отправки метрик
+# disable-metrics: 'true'

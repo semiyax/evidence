@@ -130,7 +130,7 @@ public class Player {
 
     public evidence.vimeworld.Session getSession() {
         try {
-            JSONObject online = new JSONObject(API.readRequest("http://api.vime.world/user/" + id + "/session"));
+            JSONObject online = new JSONObject(API.readRequest("https://api.vimeworld.com/user/" + id + "/session"));
             return new evidence.vimeworld.Session(online.getJSONObject("online"));
         } catch (JSONException e) {
             throw new RuntimeException(e);
