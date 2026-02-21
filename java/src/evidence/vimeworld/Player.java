@@ -17,7 +17,7 @@ public class Player {
             this.id = user.getInt("id");
             this.name = user.getString("username");
             this.level = user.getInt("level");
-            this.rank = Rank.valueOf(user.getString("rank"));
+			this.rank = Rank.fromApi(user.optString("rank", "PLAYER"));
             int id = 0;
             String tag = null;
             try {
@@ -39,6 +39,9 @@ public class Player {
         PREMIUM("Premium", "§b[P]", 3, Color.AQUA),
         HOLY("Holy", "§6[H]", 4, Color.GOLD),
         IMMORTAL("Immortal", "§d[I]", 5, Color.PINK),
+        LEGEND("Legend", "§6[L]", 6, Color.GOLD),
+        DRAGON("Dragon", "§c[D]", 7, Color.RED),
+        TITAN("Titan", "§5[T]", 8, Color.PINK),
         BUILDER("Билдер", "§2[Билдер]", 4, Color.LEAF),
         MAPLEAD("Главный билдер", "§2[Гл. билдер]", 4, Color.LEAF),
         YOUTUBE("YouTube", "§c[You§fTube§c]", 4, Color.RED),
@@ -47,7 +50,8 @@ public class Player {
         MODER("Модератор", "§9[Модер]", 4, Color.BLUE),
         WARDEN("Проверенный модератор", "§9[Модер]", 4, Color.BLUE),
         CHIEF("Главный модератор", "§9[Гл. модер]", 4, Color.BLUE),
-        ADMIN("Главный админ", "§3§l[Гл. админ]", 4, Color.CYAN, true);
+        ADMIN("Главный админ", "§3§l[Гл. админ]", 4, Color.CYAN, true),
+        UNKNOWN("Неизвестно", "§7", 1, Color.GRAY);
 
         private final String title, prefix;
         private final int multiplier;
@@ -84,6 +88,17 @@ public class Player {
 
 		public String getStyle() {
 			return color.toString() + (isBold() ? "§l" : "");
+		}
+
+		public boolean isDonater() {
+			return this == VIP || this == PREMIUM || this == HOLY || this == IMMORTAL || this == LEGEND || this == DRAGON || this == TITAN;
+		}
+
+		public static Rank fromApi(String rankName) {
+			for (Rank rank : values()) {
+				if (rank.name().equalsIgnoreCase(rankName)) return rank;
+			}
+			return UNKNOWN;
 		}
 	}
     
