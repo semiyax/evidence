@@ -31,7 +31,9 @@ public class Font {
 		color(color, colorFactor);
 		boolean bold = false;
 		boolean underline = false;
-		for (char c : s.toCharArray()) {
+		char[] chars = s.toCharArray();
+		for (int index = 0; index < chars.length; index++) {
+			char c = chars[index];
 			if (c == '§') {
 				coloring = true;
 				continue;
@@ -43,6 +45,23 @@ public class Font {
 					continue;
 				} else if (c == 'n') {
 					underline = true;
+					coloring = false;
+					continue;
+				} else if (c == 'r') {
+					underline = false;
+					bold = false;
+					color = Color.WHITE;
+					color(color, colorFactor);
+					coloring = false;
+					continue;
+				} else if (c == 'x' && index + 12 < chars.length) {
+					int rgb = parseHexColor(chars, index + 1);
+					if (rgb >= 0) {
+						setCustomColor(rgb, colorFactor);
+						index += 12;
+						coloring = false;
+						continue;
+					}
 					coloring = false;
 					continue;
 				} else {
@@ -64,11 +83,27 @@ public class Font {
 			x += drawChar(c, x, y, color, colorFactor);
 			if (underline) {
 				float o = colorFactor == 1 ? 0 : 0.5f;
-//				int rgb = new java.awt.Color(color.r, color.g, color.b).getRGB();
 				bint.rect(dx - 1 + o, y + 8 + o, dx - 1 + o + 5, y + 8 + o + 1, -1);
 			}
 		}
 		bint.setColor(1, 1, 1, 1);
+	}
+
+	private static int parseHexColor(char[] chars, int start) {
+		StringBuilder hex = new StringBuilder(6);
+		for (int i = 0; i < 6; i++) {
+			int marker = start + i * 2;
+			if (chars[marker] != '§') return -1;
+			char digit = Character.toLowerCase(chars[marker + 1]);
+			if (Character.digit(digit, 16) < 0) return -1;
+			hex.append(digit);
+		}
+		return Integer.parseInt(hex.toString(), 16);
+	}
+
+	private static void setCustomColor(int rgb, int colorFactor) {
+		float factor = 1f / colorFactor;
+		bint.setColor(((rgb >> 16) & 0xFF) / 255f * factor, ((rgb >> 8) & 0xFF) / 255f * factor, (rgb & 0xFF) / 255f * factor, 1);
 	}
 
 	private static void color(Color color, int factor) {

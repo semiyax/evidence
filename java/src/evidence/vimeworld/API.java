@@ -62,7 +62,7 @@ public final class API {
 
 	public static evidence.vimeworld.Guild getGuild(String guildname) {
 		try {
-			String rawJson = readRequest("http://api.vime.world/guild/get?name=" + guildname);
+			String rawJson = readRequest("https://api.vimeworld.com/guild/get?name=" + guildname);
 			return new evidence.vimeworld.Guild(new JSONObject(rawJson));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,7 +71,7 @@ public final class API {
 	}
 	public static evidence.vimeworld.Guild getGuild(int id) {
 		try {
-			String rawJson = readRequest("http://api.vimeworld.ru/guild/get?id=" + id);
+			String rawJson = readRequest("https://api.vimeworld.com/guild/get?id=" + id);
 			return new evidence.vimeworld.Guild(new JSONObject(rawJson));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,7 +81,7 @@ public final class API {
 
 	public static evidence.vimeworld.Player getPlayer(String player) {
 		try {
-			String rawJson = readRequest("http://api.vimeworld.ru/user/name/" + player);
+			String rawJson = readRequest("https://api.vimeworld.com/user/name/" + player);
 			JSONArray array = new JSONArray(rawJson);
 			return new evidence.vimeworld.Player(array.getJSONObject(0));
 		} catch (IllegalArgumentException e) {
@@ -96,7 +96,7 @@ public final class API {
 	public static List<evidence.vimeworld.Player> getPlayers(Integer... ids) {
 		List<evidence.vimeworld.Player> list = new ArrayList<>(ids.length);
 		String parameter = Utils.merge(ids, String::valueOf, ",");
-		String rawJson = readRequest("http://api.vimeworld.ru/user/" + parameter);
+		String rawJson = readRequest("https://api.vimeworld.com/user/" + parameter);
 		try {
 			JSONArray array = new JSONArray(rawJson);
 			return Utils.transform(Utils.toJavaList(array), Player::new);
